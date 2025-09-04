@@ -32,7 +32,7 @@ import { User } from "./entities/user.entity";
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
-        url: process.env.DATABASE_URL, // ✅ Railway fournit cette variable
+        url: 'postgresql://postgres:clIJEeMGinkcjBhSSsKpyCUOPhlVZjVQ@mainline.proxy.rlwy.net:53502/railway', // ✅ Railway fournit cette variable
         ssl: {
           rejectUnauthorized: false, // ✅ nécessaire pour Railway
         },
