@@ -20,12 +20,13 @@ exports.AppModule = AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRootAsync({
                 useFactory: () => ({
                     type: 'postgres',
-                    url: 'postgresql://postgres:clIJEeMGinkcjBhSSsKpyCUOPhlVZjVQ@mainline.proxy.rlwy.net:53502/railway',
+                    url: process.env.DATABASE_URL,
                     ssl: {
                         rejectUnauthorized: false,
                     },
-                    entities: [user_entity_1.User],
+                    autoLoadEntities: true,
                     synchronize: true,
+                    logging: true,
                 }),
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
