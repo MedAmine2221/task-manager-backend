@@ -7,6 +7,6 @@ async function bootstrap() {
   const config = new DocumentBuilder().setTitle("Task Management App").setDescription("Task Management App APIs").build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app,documentFactory)
-  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
+  await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();
