@@ -21,7 +21,6 @@
 // })
 // export class AppModule {}
 
-
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserController } from "./controllers/user.controller";
@@ -32,12 +31,13 @@ import { User } from "./entities/user.entity";
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
-        url: 'postgresql://postgres:clIJEeMGinkcjBhSSsKpyCUOPhlVZjVQ@mainline.proxy.rlwy.net:53502/railway', // ✅ Railway fournit cette variable
+        url: process.env.DATABASE_URL, // ✅ Railway injecte automatiquement cette variable
         ssl: {
           rejectUnauthorized: false, // ✅ nécessaire pour Railway
         },
-        entities: [User],
-        synchronize: true, // ⚠️ désactiver en prod
+        autoLoadEntities: true, // ✅ pas besoin de les lister à la main
+        synchronize: true,      // ⚠️ désactive en prod (risque de perte de données)
+        logging: true,          // ✅ utile pour debug
       }),
     }),
     TypeOrmModule.forFeature([User]),

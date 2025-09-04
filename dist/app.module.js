@@ -17,19 +17,20 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'postgres',
-                password: 'admin0000',
-                database: 'task-manager',
-                entities: [user_entity_1.User],
-                synchronize: true
+            typeorm_1.TypeOrmModule.forRootAsync({
+                useFactory: () => ({
+                    type: 'postgres',
+                    url: 'postgresql://postgres:clIJEeMGinkcjBhSSsKpyCUOPhlVZjVQ@mainline.proxy.rlwy.net:53502/railway',
+                    ssl: {
+                        rejectUnauthorized: false,
+                    },
+                    entities: [user_entity_1.User],
+                    synchronize: true,
+                }),
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
         ],
-        controllers: [user_controller_1.UserController]
+        controllers: [user_controller_1.UserController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
