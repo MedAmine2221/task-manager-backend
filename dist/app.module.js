@@ -41,7 +41,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
             auth_module_1.AuthModule,
-            user_module_1.UserModule
+            user_module_1.UserModule,
         ],
         controllers: [user_controller_1.UserController, auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService, user_service_1.UserService, jwt_1.JwtService],

@@ -29,9 +29,7 @@ let AuthService = class AuthService {
             return null;
         if (password === findUser.password) {
             return {
-                access_token: await this.jwtService.signAsync({ name: findUser.name, role: findUser.role }, {
-                    secret: this.configService.get('jwt.secretCode')
-                })
+                access_token: await this.jwtService.signAsync({ name: findUser.name, role: findUser.role }, { secret: this.configService.get("jwt.secretCode") }),
             };
         }
     }
