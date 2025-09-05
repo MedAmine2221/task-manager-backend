@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const roles_entity_1 = require("../roles/entity/roles.entity");
 const user_entity_1 = require("../user/entity/user.entity");
 exports.default = (configService) => ({
     type: "postgres",
@@ -7,7 +8,7 @@ exports.default = (configService) => ({
     ssl: {
         rejectUnauthorized: false,
     },
-    entities: [user_entity_1.User],
+    entities: [user_entity_1.User, roles_entity_1.Roles],
     synchronize: true,
 });
 //# sourceMappingURL=db.config.js.map

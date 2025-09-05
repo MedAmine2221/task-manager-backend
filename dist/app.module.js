@@ -23,6 +23,7 @@ const db_config_1 = __importDefault(require("./config/db.config"));
 const user_service_1 = require("./user/service/user.service");
 const jwt_1 = require("@nestjs/jwt");
 const user_module_1 = require("./user/module/user.module");
+const roles_module_1 = require("./roles/module/roles.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
             auth_module_1.AuthModule,
             user_module_1.UserModule,
+            roles_module_1.RolesModule,
         ],
         controllers: [user_controller_1.UserController, auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService, user_service_1.UserService, jwt_1.JwtService],

@@ -9,41 +9,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Roles = void 0;
 const class_validator_1 = require("class-validator");
-const roles_entity_1 = require("../../roles/entity/roles.entity");
+const user_entity_1 = require("../../user/entity/user.entity");
 const typeorm_1 = require("typeorm");
-let User = class User {
+let Roles = class Roles {
     id;
-    name;
-    email;
-    password;
-    role;
+    name_fr;
+    name_eng;
+    users;
 };
-exports.User = User;
+exports.Roles = Roles;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Roles.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     (0, class_validator_1.MinLength)(10),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Roles.prototype, "name_fr", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, class_validator_1.MinLength)(10),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Roles.prototype, "name_eng", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => roles_entity_1.Roles, (role) => role.users),
-    (0, typeorm_1.JoinColumn)({ name: "role_id" }),
-    __metadata("design:type", roles_entity_1.Roles)
-], User.prototype, "role", void 0);
-exports.User = User = __decorate([
+    (0, typeorm_1.OneToMany)(() => user_entity_1.User, (user) => user.role),
+    __metadata("design:type", Array)
+], Roles.prototype, "users", void 0);
+exports.Roles = Roles = __decorate([
     (0, typeorm_1.Entity)()
-], User);
-//# sourceMappingURL=user.entity.js.map
+], Roles);
+//# sourceMappingURL=roles.entity.js.map

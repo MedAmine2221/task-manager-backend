@@ -1,5 +1,12 @@
-import { IsEmail, MinLength } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { MinLength } from "class-validator";
+import { Roles } from "src/roles/entity/roles.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class User {
@@ -11,12 +18,12 @@ export class User {
   name: string;
 
   @Column()
-  @IsEmail()
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
-  role: string;
+  @ManyToOne(() => Roles, (role) => role.users)
+  @JoinColumn({ name: "role_id" })
+  role: Roles;
 }

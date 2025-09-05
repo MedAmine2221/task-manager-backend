@@ -11,6 +11,7 @@ import dbConfig from "./config/db.config";
 import { UserService } from "./user/service/user.service";
 import { JwtService } from "@nestjs/jwt";
 import { UserModule } from "./user/module/user.module";
+import { RolesModule } from "./roles/module/roles.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserModule } from "./user/module/user.module";
     TypeOrmModule.forFeature([User]),
     AuthModule,
     UserModule,
+    RolesModule,
   ],
   controllers: [UserController, AuthController],
   providers: [AuthService, UserService, JwtService],
