@@ -12,9 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_controller_1 = require("./controllers/user.controller");
-const user_entity_1 = require("./entities/user.entity");
+const user_controller_1 = require("./user/controller/user.controller");
+const user_entity_1 = require("./user/entity/user.entity");
 const config_1 = require("@nestjs/config");
+const auth_module_1 = require("./auth/module/auth/auth.module");
+const auth_controller_1 = require("./auth/controller/auth.controller");
+const auth_service_1 = require("./auth/service/auth.service");
 const config_2 = __importDefault(require("./config/config"));
 const db_config_1 = __importDefault(require("./config/db.config"));
 let AppModule = class AppModule {
@@ -34,8 +37,10 @@ exports.AppModule = AppModule = __decorate([
                 useFactory: (configService) => (0, db_config_1.default)(configService),
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
+            auth_module_1.AuthModule,
         ],
-        controllers: [user_controller_1.UserController],
+        controllers: [user_controller_1.UserController, auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

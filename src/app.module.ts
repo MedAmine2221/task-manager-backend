@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserController } from "./controllers/user.controller";
-import { User } from "./entities/user.entity";
+import { UserController } from "./user/controller/user.controller";
+import { User } from "./user/entity/user.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { AuthModule } from './auth/module/auth/auth.module';
+import { AuthController } from './auth/controller/auth.controller';
+import { AuthService } from './auth/service/auth.service';
 import config from "./config/config";
 import dbConfig from "./config/db.config";
 
@@ -19,7 +22,9 @@ import dbConfig from "./config/db.config";
       useFactory: (configService: ConfigService) => dbConfig(configService),
     }),
     TypeOrmModule.forFeature([User]),
+    AuthModule,
   ],
-  controllers: [UserController],
+  controllers: [UserController, AuthController],
+  providers: [AuthService],
 })
 export class AppModule {}
