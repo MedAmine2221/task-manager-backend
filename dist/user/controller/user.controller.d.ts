@@ -1,14 +1,12 @@
-import { User } from "src/user/entity/user.entity";
-import { Repository } from "typeorm";
-import { UserService } from "../service/user.service";
+import { User } from 'src/user/entity/user.entity';
+import { UserService } from '../service/user.service';
 export declare class UserController {
-    private readonly userRepository;
     private readonly userService;
-    constructor(userRepository: Repository<User>, userService: UserService);
+    constructor(userService: UserService);
     findAllUsers(): Promise<User[]>;
-    findUserById(id: any): Promise<any>;
-    findUserByEmail(email: string): Promise<any>;
+    findUserById(id: number): Promise<User | null>;
+    findUserByEmail(email: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
-    updateUser(id: any, user: User): Promise<any>;
+    updateUser(id: number, user: User): Promise<User | null>;
     deleteUser(id: number): Promise<void>;
 }

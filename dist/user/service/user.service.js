@@ -22,8 +22,24 @@ let UserService = class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    findAll() {
+        return this.userRepository.find();
+    }
+    findById(id) {
+        return this.userRepository.findOneBy({ id });
+    }
     findUserByMail(email) {
         return this.userRepository.findOneBy({ email });
+    }
+    create(user) {
+        return this.userRepository.save(user);
+    }
+    async update(id, user) {
+        await this.userRepository.update(id, user);
+        return this.findById(id);
+    }
+    async delete(id) {
+        await this.userRepository.delete(id);
     }
 };
 exports.UserService = UserService;
