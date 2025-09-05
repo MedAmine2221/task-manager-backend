@@ -12,22 +12,24 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const auth_dto_1 = require("../dto/auth.dto");
-let AuthController = class AuthController {
-    login(authPayload) {
+const user_entity_1 = require("../entity/user.entity");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+let UserService = class UserService {
+    userRepository;
+    constructor(userRepository) {
+        this.userRepository = userRepository;
+    }
+    findUserByMail(email) {
+        return this.userRepository.findOneBy({ email });
     }
 };
-exports.AuthController = AuthController;
-__decorate([
-    (0, common_1.Post)("login"),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [auth_dto_1.AuthPayloadDTO]),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "login", null);
-exports.AuthController = AuthController = __decorate([
-    (0, common_1.Controller)('auth')
-], AuthController);
-//# sourceMappingURL=auth.controller.js.map
+exports.UserService = UserService;
+exports.UserService = UserService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
+], UserService);
+//# sourceMappingURL=user.service.js.map

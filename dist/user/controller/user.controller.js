@@ -17,16 +17,22 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../entity/user.entity");
 const typeorm_2 = require("typeorm");
+const user_service_1 = require("../service/user.service");
 let UserController = class UserController {
     userRepository;
-    constructor(userRepository) {
+    userService;
+    constructor(userRepository, userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
     async findAllUsers() {
         return await this.userRepository.find();
     }
     async findUserById(id) {
         return await this.userRepository.findOne(id);
+    }
+    async findUserByEmail(email) {
+        return this.userService.findUserByMail(email);
     }
     async createUser(user) {
         return await this.userRepository.save(user);
@@ -54,6 +60,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findUserById", null);
 __decorate([
+    (0, common_1.Get)(':email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findUserByEmail", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -78,6 +91,7 @@ __decorate([
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user.controller.js.map

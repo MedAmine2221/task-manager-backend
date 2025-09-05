@@ -20,6 +20,7 @@ const auth_controller_1 = require("./auth/controller/auth.controller");
 const auth_service_1 = require("./auth/service/auth.service");
 const config_2 = __importDefault(require("./config/config"));
 const db_config_1 = __importDefault(require("./config/db.config"));
+const user_service_1 = require("./user/service/user.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -40,7 +41,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
         ],
         controllers: [user_controller_1.UserController, auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService],
+        providers: [auth_service_1.AuthService, user_service_1.UserService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

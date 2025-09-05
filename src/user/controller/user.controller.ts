@@ -2,12 +2,14 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/user/entity/user.entity";
 import { Repository } from "typeorm";
+import { UserService } from "../service/user.service";
 
 @Controller('users')
 export class UserController {
     constructor(
         @InjectRepository(User)
-        private readonly userRepository: Repository<User>
+        private readonly userRepository: Repository<User>,
+        private readonly userService: UserService
     ){}
 
     @Get()
@@ -18,6 +20,11 @@ export class UserController {
     @Get(':id')
     async findUserById(@Param('id') id: any): Promise<any>{
         return await this.userRepository.findOne(id);
+    }
+
+    @Get(':email')
+    async findUserByEmail(@Param('email') email: string): Promise<any>{
+        return this.userService.findUserByMail(email);
     }
 
     @Post()
