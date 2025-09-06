@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const user_entity_1 = require("../entity/user.entity");
 const user_service_1 = require("../service/user.service");
 const auth_guard_1 = require("../../auth/guard/auth.guard");
+const role_guard_1 = require("../../roles/guard/role.guard");
+const roles_decorator_1 = require("../../roles/roles.decorator");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -52,7 +54,7 @@ __decorate([
     (0, common_1.Get)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findUserById", null);
 __decorate([
@@ -74,7 +76,7 @@ __decorate([
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, user_entity_1.User]),
+    __metadata("design:paramtypes", [String, user_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
 __decorate([
@@ -85,7 +87,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, role_guard_1.RoleGuard),
+    (0, roles_decorator_1.Roles)("admin"),
     (0, common_1.Controller)("users"),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);

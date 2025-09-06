@@ -17,10 +17,35 @@ const common_1 = require("@nestjs/common");
 const user_entity_1 = require("../entity/user.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const roles_entity_1 = require("../../roles/entity/roles.entity");
 let UserService = class UserService {
     userRepository;
     constructor(userRepository) {
         this.userRepository = userRepository;
+    }
+    async onModuleInit() {
+        const adminRole = await this.userRepository.manager
+            .getRepository(roles_entity_1.Roles)
+            .findOne({ where: { name_fr: "ADMIN" } });
+        if (!adminRole)
+            throw new Error("Admin role not found");
+        const users = [
+            {
+                name: "Mohamed Amine LAZREG",
+                email: "lazregamine258@gmail.com",
+                password: "Admin@123",
+                role: adminRole,
+            },
+        ];
+        for (const user of users) {
+            const exists = await this.userRepository.findOne({
+                where: { email: user.email },
+            });
+            if (!exists) {
+                const newUser = this.userRepository.create({ ...user });
+                await this.userRepository.save(newUser);
+            }
+        }
     }
     findAll() {
         return this.userRepository.find();

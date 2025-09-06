@@ -4,9 +4,9 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     findAllUsers(): Promise<User[]>;
-    findUserById(id: number): Promise<User | null>;
+    findUserById(id: string): Promise<User | null>;
     findUserByEmail(email: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
-    updateUser(id: number, user: User): Promise<User | null>;
+    updateUser(id: string, user: User): Promise<User | null>;
     deleteUser(id: number): Promise<void>;
 }

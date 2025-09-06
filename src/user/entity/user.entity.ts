@@ -11,13 +11,13 @@ import {
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   @MinLength(10)
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

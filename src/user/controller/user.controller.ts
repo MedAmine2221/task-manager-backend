@@ -11,19 +11,21 @@ import {
 import { User } from "src/user/entity/user.entity";
 import { UserService } from "../service/user.service";
 import { AuthGuard } from "src/auth/guard/auth.guard";
+import { RoleGuard } from "src/roles/guard/role.guard";
+import { Roles } from "src/roles/roles.decorator";
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RoleGuard)
+@Roles("admin")
 @Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
   @Get()
   async findAllUsers(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Get(":id")
-  async findUserById(@Param("id") id: number): Promise<User | null> {
+  async findUserById(@Param("id") id: string): Promise<User | null> {
     return this.userService.findById(id);
   }
 
@@ -39,7 +41,7 @@ export class UserController {
 
   @Put(":id")
   async updateUser(
-    @Param("id") id: number,
+    @Param("id") id: string,
     @Body() user: User,
   ): Promise<User | null> {
     return this.userService.update(id, user);
