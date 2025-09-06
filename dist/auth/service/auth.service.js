@@ -33,6 +33,11 @@ let AuthService = class AuthService {
             };
         }
     }
+    validateToken(token) {
+        return this.jwtService.verify(token, {
+            secret: this.configService.get("jwt.secretCode"),
+        });
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

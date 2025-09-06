@@ -24,4 +24,10 @@ export class AuthService {
       };
     }
   }
+  validateToken(token: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this.jwtService.verify(token, {
+      secret: this.configService.get("jwt.secretCode"),
+    });
+  }
 }

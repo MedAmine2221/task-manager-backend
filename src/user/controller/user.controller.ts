@@ -6,10 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { User } from "src/user/entity/user.entity";
 import { UserService } from "../service/user.service";
+import { AuthGuard } from "src/auth/guard/auth.guard";
 
+@UseGuards(AuthGuard)
 @Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}

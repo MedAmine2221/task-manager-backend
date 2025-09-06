@@ -10,4 +10,5 @@ export declare class AuthService {
     validateUser({ email, password }: AuthPayloadDTO): Promise<{
         access_token: string;
     } | null | undefined>;
+    validateToken(token: string): any;
 }
