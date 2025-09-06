@@ -8,6 +8,13 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle("Task Management App")
         .setDescription("Task Management App APIs")
+        .addBearerAuth({
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        description: "Enter JWT bearer token",
+        in: "header",
+    }, "access-token")
         .build();
     const documentFactory = () => swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup("api", app, documentFactory);

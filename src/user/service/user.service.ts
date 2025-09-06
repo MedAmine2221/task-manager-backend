@@ -43,8 +43,12 @@ export class UserService implements OnModuleInit {
     return this.userRepository.findOneBy({ id });
   }
 
-  findUserByMail(email: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ email });
+  async findUserByMail(email: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ["role"],
+    });
+    return user;
   }
 
   create(user: User): Promise<User> {
