@@ -13,9 +13,11 @@ import { UserService } from "../service/user.service";
 import { AuthGuard } from "src/auth/guard/auth.guard";
 import { RoleGuard } from "src/roles/guard/role.guard";
 import { Roles } from "src/roles/roles.decorator";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @UseGuards(AuthGuard, RoleGuard)
-@Roles("admin")
+@ApiBearerAuth("access-token")
+@Roles("SCCRUM_MASTER", "ADMIN")
 @Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}

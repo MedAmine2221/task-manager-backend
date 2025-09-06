@@ -13,27 +13,40 @@ exports.RoleGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const roles_decorator_1 = require("../roles.decorator");
+const auth_service_1 = require("../../auth/service/auth.service");
 let RoleGuard = class RoleGuard {
     reflactor;
-    constructor(reflactor) {
+    authService;
+    constructor(reflactor, authService) {
         this.reflactor = reflactor;
+        this.authService = authService;
     }
     matchRoles(roles, userRole) {
         return roles.some((role) => role === userRole);
     }
-    canActivate(context) {
-        const roles = this.reflactor.get(roles_decorator_1.ROLES_KEY, context.getHandler());
-        if (!roles) {
+    async canActivate(context) {
+        const roles = this.reflactor.getAllAndOverride(roles_decorator_1.ROLES_KEY, [
+            context.getHandler(),
+            context.getClass(),
+        ]);
+        console.log("roles", roles);
+        if (roles?.length === 0) {
             return true;
         }
         const request = context.switchToHttp().getRequest();
-        const user = request.user;
-        return this.matchRoles(roles, user.role.name_fr);
+        const { authorization } = request.headers;
+        if (!authorization || authorization.trim() === "") {
+            throw new common_1.UnauthorizedException("Please provide token");
+        }
+        const authToken = authorization.replace(/bearer/gim, "").trim();
+        const resp = await this.authService.validateToken(authToken);
+        return roles.includes(resp.role.name_fr || resp.role.name_eng);
     }
 };
 exports.RoleGuard = RoleGuard;
 exports.RoleGuard = RoleGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [core_1.Reflector])
+    __metadata("design:paramtypes", [core_1.Reflector,
+        auth_service_1.AuthService])
 ], RoleGuard);
 //# sourceMappingURL=role.guard.js.map

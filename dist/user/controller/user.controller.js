@@ -19,6 +19,7 @@ const user_service_1 = require("../service/user.service");
 const auth_guard_1 = require("../../auth/guard/auth.guard");
 const role_guard_1 = require("../../roles/guard/role.guard");
 const roles_decorator_1 = require("../../roles/roles.decorator");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -88,7 +89,8 @@ __decorate([
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, role_guard_1.RoleGuard),
-    (0, roles_decorator_1.Roles)("admin"),
+    (0, swagger_1.ApiBearerAuth)("access-token"),
+    (0, roles_decorator_1.Roles)("SCCRUM_MASTER", "ADMIN"),
     (0, common_1.Controller)("users"),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
